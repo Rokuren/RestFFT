@@ -8,6 +8,7 @@
 #include <chrono>
 #include <thread>
 #include "lodepng.h"
+#include "fftw++.h"
 
 void handle_get(web::http::http_request);
 void handle_post(web::http::http_request);

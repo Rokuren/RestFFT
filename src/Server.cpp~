@@ -18,9 +18,9 @@ int main() {
 	try {
 		listener.open().then([&listener]() {
 			ucout << "Server Started\n";
-		}).wait();
+		}).wait(); // TODO look into if I have time
 		
-		while (true);
+		this_thread::sleep_for(chrono::seconds(30));
 	}
 	catch (http_exception e){
 		listener.close();
@@ -31,7 +31,7 @@ int main() {
 
 	listener.close();
 
-    std::cout << "Hello,World\n";
+	std::cout << "Huzzah\n";
 	return 0;
 }
 
@@ -76,20 +76,23 @@ void handle_post(http_request request) {
 	width = 100;
 	lodepng::decode(image, width, height, state, vec);
 
-	Date d; // = new Date();
 	ucout << image.size(); // size is 48000 for png with height = 120; width = 100; and rgba(4)
 	ucout << "\n";
 	
-	for (int x = 0; x < image.size(); x += 4) {
+	for (int x = 0; x < image.size() - 1; x += 4) {
+		ucout << x; // stopped at 47996; that's correct? or did it loop again and then die
+		ucout << "\n";
+		
 		rgba[0] = image[x];
 		rgba[1] = image[x + 1];
 		rgba[2] = image[x + 2];
 		rgba[3] = image[x + 3];
 		
 		complexArray[x / 4] = pack_color(rgba);
+		
 	}
 
-	ucout << "Woo";
+	ucout << "Hello, there\n";  // not getting here. an issue with the pack?
 	//std::copy(vec.begin(), vec.end(), arr);
 	//request.reply(status_codes::OK, arr);
 	request.set_body(image);
