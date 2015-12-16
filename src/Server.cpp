@@ -2,10 +2,10 @@
 #include "server.h"
 
 using namespace std;
-/*using namespace web;
+using namespace web;
 using namespace web::http;
 using namespace web::http::experimental::listener; // HTTP Server
-*/
+
 int main() {
 	
 	http_listener listener(L"http://localhost:18080/transform");

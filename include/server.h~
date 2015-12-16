@@ -8,7 +8,7 @@
 #include <chrono>
 #include <thread>
 #include "lodepng.h"
-
+/*
 void handle_get(web::http::http_request);
 void handle_post(web::http::http_request);
 float pack_color(unsigned char rgba[4]);
@@ -34,5 +34,5 @@ struct Date {
 		year = 1989;
 	}
 };
-
+*/
 #endif
