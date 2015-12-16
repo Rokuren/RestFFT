@@ -16,5 +16,8 @@ export LD_LIBRARY_PATH=/home/rokuren/Workspace/casablanca/Release/build.release/
 
 # Run Command
 
-g++ -std=c++11 Server.cpp -I ~/Workspace/RestFFT/include/ -L /home/rokuren/Workspace/casablanca/Release/build.release/Binaries/ -o server -lboost_system -lcpprest -lcrypto -lssl
+g++ -std=c++11 Server.cpp lodepng.cpp -I ~/Workspace/RestFFT/include/ -L /home/rokuren/Workspace/casablanca/Release/build.release/Binaries/ -o server -lboost_system -lcpprest -lcrypto -lssl
 
+# Curl Command
+
+curl --header "Content-Type:application/octet-stream" --data-binary @spiderman.png http://localhost:18080/transform > out.cplx

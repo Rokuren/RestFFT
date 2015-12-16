@@ -76,6 +76,7 @@ void handle_post(http_request request) {
 	width = 100;
 	lodepng::decode(image, width, height, state, vec);
 
+	Date d; // = new Date();
 	ucout << image.size(); // size is 48000 for png with height = 120; width = 100; and rgba(4)
 	ucout << "\n";
 	
