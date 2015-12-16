@@ -7,7 +7,7 @@ using namespace web::http;
 using namespace web::http::experimental::listener; // HTTP Server
 */
 int main() {
-	
+	/*
 	http_listener listener(L"http://localhost:18080/transform");
 
 	listener.support(methods::GET, handle_get);
@@ -30,7 +30,7 @@ int main() {
 
 
 	listener.close();
-
+*/
     std::cout << "Hello,World\n";
 	return 0;
 }
