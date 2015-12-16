@@ -2,6 +2,8 @@
 #include "server.h"
 
 using namespace std;
+using namespace utils;
+using namespace fftwpp;
 using namespace web;
 using namespace web::http;
 using namespace web::http::experimental::listener; // HTTP Server
@@ -18,7 +20,7 @@ int main() {
 	try {
 		listener.open().then([&listener]() {
 			ucout << "Server Started\n";
-		}).wait(); // TODO look into if I have time
+		}).wait(); // TODO look into if I have time; not waitng
 		
 		this_thread::sleep_for(chrono::seconds(30));
 	}
@@ -42,6 +44,7 @@ void handle_get(http_request request) {
 // curl --header "Content-Type:application/octet-stream" --data-binary @spiderman.png http://localhost:18080/transform > out.cplx
 void handle_post(http_request request) {
 	vector<unsigned char> vec; // vector from request body
+	vector<unsigned char> outvec; // reply vector
 	vector<unsigned char> image; // raw pixels after decode
 	std::complex<float> complexArray[12000];
 	unsigned char rgba[4];
@@ -79,10 +82,9 @@ void handle_post(http_request request) {
 	ucout << image.size(); // size is 48000 for png with height = 120; width = 100; and rgba(4)
 	ucout << "\n";
 	
+	// convert rgba to complex
 	for (int x = 0; x < image.size() - 1; x += 4) {
-		ucout << x; // stopped at 47996; that's correct? or did it loop again and then die
-		ucout << "\n";
-		
+
 		rgba[0] = image[x];
 		rgba[1] = image[x + 1];
 		rgba[2] = image[x + 2];
@@ -92,11 +94,41 @@ void handle_post(http_request request) {
 		
 	}
 
-	ucout << "Hello, there\n";  // not getting here. an issue with the pack?
+	ucout << "Hello, there\n";  
+
+	// FFT on complex array
+	// n complex values, -1, in, out
+	Complex *in = ComplexAlign(12000);
+	Complex *out = ComplexAlign(12000);
+
+	// Ok let's try moving complexAray to *in
+	for(int x = 0; x < 12000; x++) {
+		in[x] = complexArray[x];
+	}
+
+	fft1d Forward(12000, -1, in, out);
+	// Return FFT
+
 	//std::copy(vec.begin(), vec.end(), arr);
 	//request.reply(status_codes::OK, arr);
-	request.set_body(image);
-	request.reply(status_codes::OK);
+	std::complex<float> data[12000];
+
+	concurrency::streams::istream body;
+	
+
+	//body.read_to_end(out);
+	for(int x = 0; x < 12000; x++){
+	//	outvec.insert(out[x]);
+	}
+
+	// Gah, I need to do something about this Complex*&
+	//lodepng::encode(outvec, out, width, height, state);
+
+	http_response response(status_codes::OK);
+	
+	response.set_body(vec);
+	
+	request.reply(response).wait();
 
 	
 }

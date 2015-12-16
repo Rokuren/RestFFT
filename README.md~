@@ -11,12 +11,18 @@ cd build.release
 CXX=g++-4.8 cmake .. -DCMAKE_BUILD_TYPE=Release
 make
 
+# Install fftw
+http://www.fftw.org/
+./configure
+make
+make install
+
 # Add Library Path
 export LD_LIBRARY_PATH=/home/rokuren/Workspace/casablanca/Release/build.release/Binaries:$LD_LIBRARY_PATH
 
-# Run Command || If I can try to remember how to make a make file
+# Run Command || If I have time try to remember how to make a make file
 
-g++ -std=c++11 Server.cpp lodepng.cpp -I ~/Workspace/RestFFT/include/ -L /home/rokuren/Workspace/casablanca/Release/build.release/Binaries/ -o server -lboost_system -lcpprest -lcrypto -lssl
+g++ -std=c++11 Server.cpp lodepng.cpp fftw++.cc -I ~/Workspace/RestFFT/include/ -L /home/rokuren/Workspace/casablanca/Release/build.release/Binaries/ -o server -lboost_system -lcpprest -lcrypto -lssl -lfftw3
 
 # Curl Command
 

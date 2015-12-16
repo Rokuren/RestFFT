@@ -24,16 +24,4 @@ struct ImageArray {
 	}
 };
 
-struct Date {
-	int month;
-	int day;
-	int year;
-
-	Date() {
-		month = 1;
-		day = 5;
-		year = 1989;
-	}
-};
-
 #endif

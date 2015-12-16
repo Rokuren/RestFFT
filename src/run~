@@ -1,0 +1,2 @@
+ g++ -std=c++11 Server.cpp lodepng.cpp fftw++.cc -I ~/Workspace/RestFFT/include/ -L /home/rokuren/Workspace/casablanca/Release/build.release/Binaries/ -o server -lboost_system -lcpprest -lcrypto -lssl -lfftw3
+
